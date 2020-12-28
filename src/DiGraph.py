@@ -88,7 +88,6 @@ class DiGraph(GraphInteface):
     def get_all_v(self) -> dict:
         return self.vertices
 
-
 if __name__ == '__main__':
     graph = DiGraph()
     graph.add_node(1, (3, 2, 1))
