@@ -50,7 +50,6 @@ class DiGraph(GraphInteface):
             return self.adjacency[key]
 
     def remove_edge(self, source: int, destination: int) -> bool:
-        print(f"{source},{destination}")
         if source in self.vertices.keys() and destination in self.vertices.keys():
             if destination in self.adjacency[source]:
                 del self.adjacency[source][destination]
@@ -66,10 +65,10 @@ class DiGraph(GraphInteface):
     def remove_node(self, key: int) -> bool:
         if key in self.vertices:
 
-            for vertex in self.all_in_edges_of_node(key):
+            for vertex in list(self.all_in_edges_of_node(key)):
                 self.remove_edge(vertex, key)
 
-            for vertex2 in self.all_out_edges_of_node(key):
+            for vertex2 in list(self.all_out_edges_of_node(key)):
                 self.remove_edge(key, vertex2)
 
             del self.vertices[key]
@@ -79,6 +78,19 @@ class DiGraph(GraphInteface):
             return True
 
         return False
+
+    def v_size(self) -> int:
+        return self.v
+
+    def e_size(self) -> int:
+        return self.e
+
+    def get_mc(self) -> int:
+        return self.mc
+
+    def get_all_v(self) -> dict:
+        return self.vertices
+
 
 
 if __name__ == '__main__':
@@ -98,10 +110,7 @@ if __name__ == '__main__':
     graph.add_edge(5, 3, 1.7)
     graph.add_edge(5, 4, 1.4)
     graph.remove_node(4)
-    print(graph.vertices.items())
-    print(graph.adjacency.items())
-    print(graph.v)
-    print(graph.e)
-    print(graph.mc)
+    print(graph.get_all_v())
+
 
 
