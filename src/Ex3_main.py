@@ -1,6 +1,8 @@
 import sys
 
 from DiGraph import DiGraph
+from src.GraphAlgo import GraphAlgo
+
 
 def check():
     """
@@ -46,7 +48,7 @@ def check0():
     print(g.get_all_v())  # prints a dict with all the graph's vertices.
     print(g.all_in_edges_of_node(1))
     print(g.all_out_edges_of_node(1))
-    # g_algo = GraphAlgo(g)
+    g_algo = GraphAlgo(g)
     # print(g_algo.shortest_path(0, 3))
 
 # def check1():
