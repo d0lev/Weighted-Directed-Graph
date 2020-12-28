@@ -82,7 +82,7 @@ if __name__ == '__main__':
     graph.add_edge(5, 3, 1.7)
     graph.add_edge(5, 4, 1.4)
     boaz = graph.all_in_edges_of_node(5)
-    print(boaz)
+    print("dadkahdklaha")
 
 
 
