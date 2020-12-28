@@ -23,11 +23,9 @@ class DiGraph(GraphInteface):
         else:
             return False
 
-    def getNode(self, key) -> DiNode:
+    def get_node(self, key) -> DiNode:
         if key in self.vertices.keys():
             return self.vertices[key]
-        else:
-            return None
 
     def add_edge(self, source, destination, weight):
         if source in self.vertices.keys() and destination in self.vertices.keys():
@@ -38,8 +36,6 @@ class DiGraph(GraphInteface):
         else:
             return False
 
-
-
     def all_in_edges_of_node(self, key: int) -> dict:
         if key in self.vertices:
             in_edges = {}
@@ -48,10 +44,13 @@ class DiGraph(GraphInteface):
                     weight = self.adjacency[vertex][key]
                     in_edges[vertex] = weight
             return in_edges
-        else:
-            return None
+
+    def all_out_edges_of_node(self, key: int) -> dict:
+        if key in self.vertices:
+            return self.adjacency[key]
 
     def remove_edge(self, source: int, destination: int) -> bool:
+        print(f"{source},{destination}")
         if source in self.vertices.keys() and destination in self.vertices.keys():
             if destination in self.adjacency[source]:
                 del self.adjacency[source][destination]
@@ -63,6 +62,24 @@ class DiGraph(GraphInteface):
     def __str__(self):
         for adjacency, ne in self.adjacency.items():
             print('{0} -> {1}'.format(adjacency, ne))
+
+    def remove_node(self, key: int) -> bool:
+        if key in self.vertices:
+
+            for vertex in self.all_in_edges_of_node(key):
+                self.remove_edge(vertex, key)
+
+            for vertex2 in self.all_out_edges_of_node(key):
+                self.remove_edge(key, vertex2)
+
+            del self.vertices[key]
+            self.mc = self.mc + 1
+            self.v = self.v - 1
+
+            return True
+
+        return False
+
 
 if __name__ == '__main__':
     graph = DiGraph()
@@ -80,5 +97,11 @@ if __name__ == '__main__':
     graph.add_edge(4, 5, 1.4)
     graph.add_edge(5, 3, 1.7)
     graph.add_edge(5, 4, 1.4)
-    boaz = graph.all_in_edges_of_node(5)
-    print("everything is because boaz")
+    graph.remove_node(4)
+    print(graph.vertices.items())
+    print(graph.adjacency.items())
+    print(graph.v)
+    print(graph.e)
+    print(graph.mc)
+
+
