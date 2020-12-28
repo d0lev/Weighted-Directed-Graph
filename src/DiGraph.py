@@ -14,7 +14,8 @@ class DiGraph(GraphInteface):
     def add_node(self, key: int, pos: tuple = None) -> bool:
         if key not in self.vertices:
             node = DiNode(key)
-            node.setPosition(pos[0], pos[1], pos[2])
+            if(pos is not None):
+                node.setPosition(pos[0], pos[1], pos[2])
             self.vertices[key] = node
             self.adjacency[key] = {}
             self.v = self.v + 1
@@ -58,10 +59,6 @@ class DiGraph(GraphInteface):
                 return True
         return False
 
-    def __str__(self):
-        for adjacency, ne in self.adjacency.items():
-            print('{0} -> {1}'.format(adjacency, ne))
-
     def remove_node(self, key: int) -> bool:
         if key in self.vertices:
 
@@ -92,7 +89,6 @@ class DiGraph(GraphInteface):
         return self.vertices
 
 
-
 if __name__ == '__main__':
     graph = DiGraph()
     graph.add_node(1, (3, 2, 1))
@@ -110,7 +106,3 @@ if __name__ == '__main__':
     graph.add_edge(5, 3, 1.7)
     graph.add_edge(5, 4, 1.4)
     graph.remove_node(4)
-    print(graph.get_all_v())
-
-
-
