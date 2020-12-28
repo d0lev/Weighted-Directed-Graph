@@ -64,7 +64,6 @@ class DiGraph(GraphInteface):
         for adjacency, ne in self.adjacency.items():
             print('{0} -> {1}'.format(adjacency, ne))
 
-
 if __name__ == '__main__':
     graph = DiGraph()
     graph.add_node(1, (3, 2, 1))
@@ -82,7 +81,4 @@ if __name__ == '__main__':
     graph.add_edge(5, 3, 1.7)
     graph.add_edge(5, 4, 1.4)
     boaz = graph.all_in_edges_of_node(5)
-    print("dadkahdklaha")
-
-
-
+    print("everything is because boaz")
