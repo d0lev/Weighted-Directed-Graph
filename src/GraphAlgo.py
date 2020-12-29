@@ -14,15 +14,27 @@ class GraphAlgo(GraphAlgoInterface):
         return self.graph
 
     def save_to_json(self, file_name: str) -> bool:
-        Nodes = {}
-        Edges = {}
-
+        graph_json = {"Nodes": [], "Edges": []}
         with open(file_name, mode='w') as my_file:
-            for node in self.graph.get_all_v():
-                node_dict = {'pos': str(DiNode(node).position), 'id': node}
-                node_str = json.dumps(node_dict)
-                my_file.write(node_str)
+            for vertex in self.graph.get_all_v():
+                v = self.graph.get_node(vertex)
+                pos = str(v.getPosition()[0]) + "," + str(v.getPosition()[1]) + "," + str(v.getPosition()[2])
+                id = v.getKey()
+                vertex_dict = {'pos': pos, "id": id}
+                graph_json["Nodes"].append(vertex_dict)
 
+            for edge in self.graph.edges:
+                src = edge[0]
+                dest = edge[1]
+                weight = edge[2]
+                edge_dict = {"src": src, "dest": dest, "w": weight}
+                graph_json["Edges"].append(edge_dict)
+
+            graph_json_str = json.dumps(graph_json)
+            my_file.write(graph_json_str)
+            return True
+
+        return False
 
     def load_from_json(self, file_name: str) -> bool:
         graph_dis = DiGraph()
@@ -48,11 +60,12 @@ class GraphAlgo(GraphAlgoInterface):
             return True
         return False
 
+
 if __name__ == '__main__':
     graph = DiGraph()
     graph.add_node(1, (3, 2, 1))
     graph.add_node(2, (3, 2, 1))
-    graph.add_node(3, (3, 2, 1))
+    graph.add_node(3, (3.324344124234, 2.123345534, 1.124524))
     graph.add_node(4, (3, 2, 1))
     graph.add_node(5, (3, 2, 1))
     graph.add_node(6, (3, 2, 1))

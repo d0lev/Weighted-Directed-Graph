@@ -7,6 +7,7 @@ class DiGraph(GraphInteface):
     def __init__(self):
         self.vertices = {}
         self.adjacency = {}
+        self.edges = []
         self.e = 0
         self.mc = 0
         self.v = 0
@@ -31,6 +32,7 @@ class DiGraph(GraphInteface):
     def add_edge(self, source, destination, weight):
         if source in self.vertices.keys() and destination in self.vertices.keys():
             self.adjacency[source][destination] = weight
+            self.edges.append((source,destination,weight))
             self.e = self.e + 1
             self.mc = self.mc + 1
             return True
@@ -53,7 +55,9 @@ class DiGraph(GraphInteface):
     def remove_edge(self, source: int, destination: int) -> bool:
         if source in self.vertices.keys() and destination in self.vertices.keys():
             if destination in self.adjacency[source]:
+                weight = self.adjacency[source][destination]
                 del self.adjacency[source][destination]
+                self.edges.remove((source, destination, weight))
                 self.mc = self.mc + 1
                 self.e = self.e - 1
                 return True
@@ -104,4 +108,4 @@ if __name__ == '__main__':
     graph.add_edge(4, 5, 1.4)
     graph.add_edge(5, 3, 1.7)
     graph.add_edge(5, 4, 1.4)
-    graph.remove_node(4)
+    print(graph.edges)
