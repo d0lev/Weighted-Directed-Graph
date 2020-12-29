@@ -4,6 +4,7 @@ from src.DiGraph import DiGraph
 from src.DiNode import DiNode
 import json
 from queue import *
+import sys
 
 
 class GraphAlgo(GraphAlgoInterface):
@@ -79,22 +80,27 @@ class GraphAlgo(GraphAlgoInterface):
                             pqueue.put((temp_weight, neighbour))
                             neighbour.setWeight(temp_weight)
 
-        squeue = Queue()
-        path = []
-        current = graph.get_node(destination)
-        path.append(current)
-        while current is not src:
-            for key, weight in self.graph.all_in_edges_of_node(current.key).items():
-                neighbour = self.graph.get_node(key)
-                if current.weight - weight == neighbour.weight:
-                    path.append(neighbour)
-                    squeue.put(neighbour)
+            squeue = Queue()
+            path = []
+            current = graph.get_node(destination)
+            if current.getWeight() == sys.maxsize:
+                return None
+            else:
+                path.append(current)
+                while current is not src:
+                    for key, weight in self.graph.all_in_edges_of_node(current.key).items():
+                        neighbour = self.graph.get_node(key)
+                        if current.weight - weight == neighbour.weight:
+                            path.append(neighbour)
+                            squeue.put(neighbour)
 
-            current = squeue.get()
-        dest = graph.get_node(destination).getWeight()
-        path.reverse()
-        ans = (dest, path)
-        return ans
+                        current = squeue.get()
+
+                dest = graph.get_node(destination).getWeight()
+                path.reverse()
+                ans = (dest, path)
+                return ans
+
 
 if __name__ == '__main__':
     graph = DiGraph()
@@ -103,11 +109,17 @@ if __name__ == '__main__':
     graph.add_node(3)
     graph.add_node(4)
     graph.add_node(5)
-    graph.add_edge(1, 4, 1.25)
-    graph.add_edge(1, 2, 1.2)
-    graph.add_edge(2, 1, 4.14)
-    graph.add_edge(2, 3, 3.8)
-    graph.add_edge(4, 3, 1.25)
-    graph.add_edge(4, 5, 36.1)
-    graph.add_edge(3, 5, 1.25)
-    ga = GraphAlgo(graph)
+    graph.add_node(6)
+    graph.add_node(7)
+    graph.add_node(8)
+    graph.add_edge(1, 2, 1.25)
+    graph.add_edge(2, 3, 1.25)
+    graph.add_edge(3, 1, 2.25)
+    graph.add_edge(1, 4, 3)
+    graph.add_edge(4, 5, 4)
+    graph.add_edge(5, 6, 4)
+    graph.add_edge(6, 7, 4)
+    graph.add_edge(7, 5, 4)
+    graph.add_edge(4, 8, 5)
+    galgo = GraphAlgo(graph)
+    print(galgo.shortest_path(8, 1))

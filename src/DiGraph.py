@@ -1,3 +1,4 @@
+from builtins import *
 from src.DiNode import DiNode
 from src.GraphInterface import GraphInteface
 
@@ -80,6 +81,13 @@ class DiGraph(GraphInteface):
 
         return False
 
+    def edge_transpose(self) -> list:
+        transpose_list = []
+        for tup in self.edges:
+            n = (tup[1], tup[0], tup[2])
+            transpose_list.append(n)
+        return transpose_list
+
     def v_size(self) -> int:
         return self.v
 
@@ -91,6 +99,7 @@ class DiGraph(GraphInteface):
 
     def get_all_v(self) -> dict:
         return self.vertices
+
 
 
 if __name__ == '__main__':
@@ -109,3 +118,4 @@ if __name__ == '__main__':
     graph.add_edge(4, 5, 1.4)
     graph.add_edge(5, 3, 1.7)
     graph.add_edge(5, 4, 1.4)
+
