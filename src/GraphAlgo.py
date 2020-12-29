@@ -6,7 +6,6 @@ import json
 from queue import *
 import sys
 
-
 class GraphAlgo(GraphAlgoInterface):
 
     def __init__(self, g: DiGraph):
@@ -63,6 +62,10 @@ class GraphAlgo(GraphAlgoInterface):
         return False
 
     def shortest_path(self, source: int, destination: int) -> (float, list):
+        tuple_ans = self.dijkstra(source, destination)
+        return tuple_ans
+
+    def dijkstra(self, source: int, destination: int) -> (float, list):
         if (source in self.graph.vertices and destination in self.graph.vertices
                 and source != destination):
             pqueue = PriorityQueue()
@@ -101,6 +104,17 @@ class GraphAlgo(GraphAlgoInterface):
                 ans = (dest, path)
                 return ans
 
+    def dfs(self, source:int):
+        if source in self.graph.vertices:
+         self.inner_dfs(source)
+
+    def inner_dfs(self,source):
+        vertex = graph.get_node(source)
+        vertex.setInfo("visited")
+        for key, weight in self.graph.all_out_edges_of_node(vertex.key).items():
+            current = graph.get_node(key)
+            if current.getInfo() == "unvisited":
+                self.inner_dfs(current.key)
 
 if __name__ == '__main__':
     graph = DiGraph()
