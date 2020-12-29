@@ -1,3 +1,5 @@
+import sys
+
 
 class DiNode:
 
@@ -5,8 +7,8 @@ class DiNode:
         """A Default constructor method"""
         self.key = key
         self.position = (0, 0, 0)
-        self.info = None
-        self.weight = None
+        self.info = "unvisited"
+        self.weight = sys.maxsize
 
     def getKey(self):
         return self.key
@@ -29,5 +31,7 @@ class DiNode:
     def getPosition(self):
         return self.position
 
+    def __str__(self):
+        return f"{self.getKey()},{self.getWeight()}"
 
 

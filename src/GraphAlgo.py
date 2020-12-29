@@ -3,6 +3,7 @@ from src.GraphAlgoInterface import GraphAlgoInterface
 from src.DiGraph import DiGraph
 from src.DiNode import DiNode
 import json
+from queue import *
 
 
 class GraphAlgo(GraphAlgoInterface):
@@ -60,22 +61,53 @@ class GraphAlgo(GraphAlgoInterface):
             return True
         return False
 
+    def shortest_path(self, source: int, destination: int) -> (float, list):
+        if (source in self.graph.vertices and destination in self.graph.vertices
+                and source != destination):
+            pqueue = PriorityQueue()
+            src = self.graph.get_node(source)
+            src.setWeight(0)
+            pqueue.put((0, src))
+            while not pqueue.empty():
+                vertx = pqueue.get()[1]
+                vertx.setInfo("visited")
+                for key, weight in self.graph.all_out_edges_of_node(vertx.key).items():
+                    neighbour = self.graph.get_node(key)
+                    if neighbour.getInfo() == "unvisited":
+                        temp_weight = vertx.weight + weight
+                        if temp_weight < neighbour.weight:
+                            pqueue.put((temp_weight, neighbour))
+                            neighbour.setWeight(temp_weight)
+
+        squeue = Queue()
+        path = []
+        current = graph.get_node(destination)
+        path.append(current)
+        while current is not src:
+            for key, weight in self.graph.all_in_edges_of_node(current.key).items():
+                neighbour = self.graph.get_node(key)
+                if current.weight - weight == neighbour.weight:
+                    path.append(neighbour)
+                    squeue.put(neighbour)
+
+            current = squeue.get()
+        dest = graph.get_node(destination).getWeight()
+        path.reverse()
+        ans = (dest, path)
+        return ans
 
 if __name__ == '__main__':
     graph = DiGraph()
-    graph.add_node(1, (3, 2, 1))
-    graph.add_node(2, (3, 2, 1))
-    graph.add_node(3, (3.324344124234, 2.123345534, 1.124524))
-    graph.add_node(4, (3, 2, 1))
-    graph.add_node(5, (3, 2, 1))
-    graph.add_node(6, (3, 2, 1))
+    graph.add_node(1)
+    graph.add_node(2)
+    graph.add_node(3)
+    graph.add_node(4)
+    graph.add_node(5)
+    graph.add_edge(1, 4, 1.25)
     graph.add_edge(1, 2, 1.2)
-    graph.add_edge(1, 4, 1.3)
-    graph.add_edge(2, 3, 1.5)
-    graph.add_edge(3, 6, 1.6)
-    graph.add_edge(4, 1, 1.9)
-    graph.add_edge(4, 5, 1.4)
-    graph.add_edge(5, 3, 1.7)
-    graph.add_edge(5, 4, 1.4)
+    graph.add_edge(2, 1, 4.14)
+    graph.add_edge(2, 3, 3.8)
+    graph.add_edge(4, 3, 1.25)
+    graph.add_edge(4, 5, 36.1)
+    graph.add_edge(3, 5, 1.25)
     ga = GraphAlgo(graph)
-    ga.save_to_json('A6.json')
