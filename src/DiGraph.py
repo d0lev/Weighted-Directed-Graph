@@ -14,7 +14,7 @@ class DiGraph(GraphInteface):
     def add_node(self, key: int, pos: tuple = None) -> bool:
         if key not in self.vertices:
             node = DiNode(key)
-            if(pos is not None):
+            if pos is not None:
                 node.setPosition(pos[0], pos[1], pos[2])
             self.vertices[key] = node
             self.adjacency[key] = {}

@@ -1,13 +1,19 @@
+from src import GraphInterface
 from src.GraphAlgoInterface import GraphAlgoInterface
 from src.DiGraph import DiGraph
+
 
 class GraphAlgo(GraphAlgoInterface):
 
     def __init__(self, g: DiGraph):
         self.graph = g
 
-    def printsss(self):
-        print(self.graph.vertices)
+    def get_graph(self) -> GraphInterface:
+        return self.graph
+
+    def load_from_json(self, file_name: str) -> bool:
+
+
 
 if __name__ == '__main__':
     graph = DiGraph()
@@ -26,4 +32,4 @@ if __name__ == '__main__':
     graph.add_edge(5, 3, 1.7)
     graph.add_edge(5, 4, 1.4)
     ga = GraphAlgo(graph)
-    print(ga.printsss())
+
