@@ -1,8 +1,8 @@
 from src import GraphInterface
 from src.GraphAlgoInterface import GraphAlgoInterface
 from src.DiGraph import DiGraph
+from src.DiNode import DiNode
 import json
-import string
 
 
 class GraphAlgo(GraphAlgoInterface):
@@ -12,6 +12,16 @@ class GraphAlgo(GraphAlgoInterface):
 
     def get_graph(self) -> GraphInterface:
         return self.graph
+
+    def save_to_json(self, file_name: str) -> bool:
+        Nodes = {}
+        Edges = {}
+
+        with open(file_name, mode='w') as my_file:
+            for node in self.graph.get_all_v():
+                node_dict = {'pos': str(DiNode(node).position), 'id': node}
+                node_str = json.dumps(node_dict)
+                my_file.write(node_str)
 
 
     def load_from_json(self, file_name: str) -> bool:
@@ -38,7 +48,6 @@ class GraphAlgo(GraphAlgoInterface):
             return True
         return False
 
-
 if __name__ == '__main__':
     graph = DiGraph()
     graph.add_node(1, (3, 2, 1))
@@ -56,5 +65,4 @@ if __name__ == '__main__':
     graph.add_edge(5, 3, 1.7)
     graph.add_edge(5, 4, 1.4)
     ga = GraphAlgo(graph)
-    ga.load_from_json('../data/T0.json')
-    print(ga.get_graph().get_node(0).getPosition())
+    ga.save_to_json('A6.json')
