@@ -1,6 +1,8 @@
 from src import GraphInterface
 from src.GraphAlgoInterface import GraphAlgoInterface
 from src.DiGraph import DiGraph
+import json
+import string
 
 
 class GraphAlgo(GraphAlgoInterface):
@@ -11,8 +13,30 @@ class GraphAlgo(GraphAlgoInterface):
     def get_graph(self) -> GraphInterface:
         return self.graph
 
-    def load_from_json(self, file_name: str) -> bool:
 
+    def load_from_json(self, file_name: str) -> bool:
+        graph_dis = DiGraph()
+        with open(file_name, mode='r') as my_file:
+            json_str = my_file.read()
+            graph_from_json = json.loads(json_str)
+
+        for vertex in graph_from_json['Nodes']:
+            pos = vertex.get('pos')
+            if pos is not None:
+                pos = tuple(map(float, vertex['pos'].split(',')))
+            key = vertex['id']
+            graph_dis.add_node(key, pos)
+
+        for edge in graph_from_json['Edges']:
+            source = int(edge['src'])
+            destination = int(edge['dest'])
+            weight = float(edge['w'])
+            graph_dis.add_edge(source, destination, weight)
+
+        self.graph = graph_dis
+        if self.graph is not None:
+            return True
+        return False
 
 
 if __name__ == '__main__':
@@ -32,4 +56,5 @@ if __name__ == '__main__':
     graph.add_edge(5, 3, 1.7)
     graph.add_edge(5, 4, 1.4)
     ga = GraphAlgo(graph)
-
+    ga.load_from_json('../data/T0.json')
+    print(ga.get_graph().get_node(0).getPosition())
