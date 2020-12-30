@@ -3,7 +3,6 @@ from src.DiNode import DiNode
 from src.GraphInterface import GraphInterface
 import sys
 
-
 class DiGraph(GraphInterface):
 
     def __init__(self):

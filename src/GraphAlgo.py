@@ -162,15 +162,26 @@ class GraphAlgo(GraphAlgoInterface):
 
 
 if __name__ == '__main__':
-    g = DiGraph()
-    for n in range(4):
-        g.add_node(n)
-    g.add_edge(0, 1, 1)
-    g.add_edge(1, 0, 1.1)
-    g.add_edge(1, 2, 1.3)
-    g.add_edge(2, 3, 1.1)
-    g.add_edge(1, 3, 1.9)
-    g.remove_edge(1, 3)
-    g.add_edge(1, 3, 10)
-    galgo = GraphAlgo(g)
-    print(galgo.connected_component(1))
+    graph = DiGraph()
+    for i in range(1, 11):
+        graph.add_node(i)
+    graph.add_edge(1, 2, 5)
+    graph.add_edge(1, 8, 4)
+    graph.add_edge(9, 10, 0)
+    graph.add_edge(5, 2, 3)
+    graph.add_edge(1, 5, 7)
+    graph.add_edge(2, 10, 10)
+    algo = GraphAlgo(graph)
+    print(algo.shortest_path(1, 10))
+    print(algo.shortest_path(1, 9))
+    print(algo.shortest_path(1, 11))
+    print(algo.shortest_path(1, 2))
+    graph.remove_edge(1, 2)
+    print(algo.shortest_path(1, 5))
+    print(algo.shortest_path(1, 2))
+    print(algo.shortest_path(1, 10))
+    print(algo.shortest_path(9, 10))
+    graph.remove_node(2)
+    graph.add_edge(5, 10, 1)
+    print(algo.shortest_path(1, 10))
+

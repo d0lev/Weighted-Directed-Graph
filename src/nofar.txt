@@ -1,0 +1,29 @@
+import unittest
+
+from src.DiGraph import DiGraph
+from src.GraphAlgo import GraphAlgo
+
+
+class MyTestCase(unittest.TestCase):
+    def test_something(self):
+        self.assertEqual(True, False)
+
+    def test_path(self):
+
+
+        self.assertEqual((15, [1, 2, 10]), algo.shortest_path(1, 10))
+        self.assertEqual((-1, []), algo.shortest_path(1, 9))
+        self.assertEqual((-1, []), algo.shortest_path(1, 11))
+        self.assertEqual((5, [1, 2]), algo.shortest_path(1, 2))
+        self.assertTrue(graph.remove_edge(1, 2))
+        self.assertEqual((7, [1, 5]), algo.shortest_path(1, 5))
+        self.assertEqual((10, [1, 5, 2]), algo.shortest_path(1, 2))
+        self.assertEqual((20, [1, 5, 2, 10]), algo.shortest_path(1, 10))
+        self.assertEqual((0, [9, 10]), algo.shortest_path(9, 10))
+        self.assertTrue(graph.remove_node(2))
+        self.assertFalse(graph.add_edge(5, 10, -1))
+        self.assertTrue(graph.add_edge(5, 10, 1))
+        self.assertEqual((8, [1, 5, 10]), algo.shortest_path(1, 10))
+
+if __name__ == '__main__':
+    unittest.main()
