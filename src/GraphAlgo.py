@@ -104,17 +104,9 @@ class GraphAlgo(GraphAlgoInterface):
                 ans = (dest, path)
                 return ans
 
-    def dfs(self, source:int):
-        if source in self.graph.vertices:
-         self.inner_dfs(source)
 
-    def inner_dfs(self,source):
-        vertex = graph.get_node(source)
-        vertex.setInfo("visited")
-        for key, weight in self.graph.all_out_edges_of_node(vertex.key).items():
-            current = graph.get_node(key)
-            if current.getInfo() == "unvisited":
-                self.inner_dfs(current.key)
+
+
 
 if __name__ == '__main__':
     graph = DiGraph()

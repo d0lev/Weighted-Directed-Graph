@@ -3,6 +3,7 @@ from src.DiNode import DiNode
 from src.GraphInterface import GraphInteface
 
 
+
 class DiGraph(GraphInteface):
 
     def __init__(self):
@@ -89,19 +90,14 @@ class DiGraph(GraphInteface):
             transpose_list.append(n)
         return transpose_list
 
-    def adjacency_transpose(self):
-        edge_t = self.edge_transpose()
-        adj_t = {}
-        for vertex in self.vertices.keys():
-            adj_t[vertex] = {}
-        for vertex in edge_t:
-            adj_t[vertex[0]][vertex[1]] = vertex[2]
+    def graph_transpose(self):
+        graph_t = DiGraph()
+        for key in self.vertices:
+            graph_t.add_node(key)
+        for neighbour in self.edge_transpose():
+            graph_t.add_edge(neighbour[0], neighbour[1], neighbour[2])
+        return graph_t
 
-        self.adjacency_t = adj_t
-
-    def daza(self):
-        boaz = {}
-        for
     def v_size(self) -> int:
         return self.v
 
@@ -132,8 +128,6 @@ if __name__ == '__main__':
     graph.add_edge(4, 5, 1.4)
     graph.add_edge(5, 3, 1.7)
     graph.add_edge(5, 4, 1.4)
-    print(graph.adjacency)
-    graph.adjacency_transpose()
-    print(graph.adjacency)
-    graph.adjacency_transpose()
-    print(graph.adjacency_t)
+    print(graph.adjacency.items())
+    print(graph.graph_transpose().adjacency.items())
+
