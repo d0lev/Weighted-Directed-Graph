@@ -111,7 +111,15 @@ class DiGraph(GraphInterface):
 
 
     def __str__(self):
-        return f"Graph:|V|={self.v},|E| ={self.e}"
+       intro = f"Graph: |V|={self.v},|E|={self.e}"
+       dict_open = "{"
+       for key in self.vertices:
+
+           for edge_out in self.all_out_edges_of_node(key):
+
+
+
+        dict_close = "}"
 
 if __name__ == '__main__':
     graph = DiGraph()
