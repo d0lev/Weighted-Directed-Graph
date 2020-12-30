@@ -110,6 +110,9 @@ class DiGraph(GraphInteface):
             vertex.setWeight(sys.maxsize)
 
 
+    def __str__(self):
+        return f"Graph:|V|={self.v},|E| ={self.e}"
+
 if __name__ == '__main__':
     graph = DiGraph()
     graph.add_node(1, (3, 2, 1))

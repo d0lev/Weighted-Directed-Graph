@@ -86,7 +86,7 @@ class GraphAlgo(GraphAlgoInterface):
 
             squeue = Queue()
             path = []
-            current = graph.get_node(destination)
+            current = self.graph.get_node(destination)
             if current.getWeight() == sys.maxsize:
                 return None
             else:
