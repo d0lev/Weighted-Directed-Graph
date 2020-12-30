@@ -31,7 +31,9 @@ class DiNode:
     def getPosition(self):
         return self.position
 
-    def __str__(self):
-        return f"{self.getKey()} , {self.getWeight()}"
+    def __repr__(self) -> str:
+        return f"{self.key}"
+
+
 
 
