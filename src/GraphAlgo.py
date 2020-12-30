@@ -6,6 +6,7 @@ import json
 from queue import *
 import sys
 
+
 class GraphAlgo(GraphAlgoInterface):
 
     def __init__(self, g: DiGraph):
@@ -104,9 +105,29 @@ class GraphAlgo(GraphAlgoInterface):
                 ans = (dest, path)
                 return ans
 
+    def dfs(self):
+        self.graph.Reset()
+        stack = LifoQueue()
+        for v in self.graph.vertices.values():
+            if DiNode(v).getInfo() == "unvisited":
+                self.dfs_inner(v, stack)
 
+        graph_reverse = graph.graph_transpose()
+        connected_component =[]
+        while not stack.empty():
+            vertex = graph_reverse.get_node(stack.get())
+            if vertex.getInfo() == "unvisited"
 
+    def dfs_inner(self, v, stack):
+        DiNode(v).setInfo("visited")
+        for neighbour, weight in self.graph.all_out_edges_of_node(v).items():
+            vertex = self.graph.get_node(neighbour)
+            if vertex.getInfo() == "unvisited":
+                self.dfs_inner(vertex, stack)
 
+        stack.put(v)
+
+    def dfs_reverse
 
 if __name__ == '__main__':
     graph = DiGraph()

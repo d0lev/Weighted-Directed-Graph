@@ -1,7 +1,7 @@
 from builtins import *
 from src.DiNode import DiNode
 from src.GraphInterface import GraphInteface
-
+import sys
 
 
 class DiGraph(GraphInteface):
@@ -110,6 +110,11 @@ class DiGraph(GraphInteface):
     def get_all_v(self) -> dict:
         return self.vertices
 
+    def Reset(self):
+        for key in self.vertices:
+            vertex = self.get_node(key)
+            vertex.setInfo("unvisited")
+            vertex.setWeight(sys.maxsize)
 
 
 if __name__ == '__main__':
@@ -129,5 +134,3 @@ if __name__ == '__main__':
     graph.add_edge(5, 3, 1.7)
     graph.add_edge(5, 4, 1.4)
     print(graph.adjacency.items())
-    print(graph.graph_transpose().adjacency.items())
-
