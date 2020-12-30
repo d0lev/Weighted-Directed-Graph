@@ -108,26 +108,41 @@ class GraphAlgo(GraphAlgoInterface):
     def dfs(self):
         self.graph.Reset()
         stack = LifoQueue()
-        for v in self.graph.vertices.values():
-            if DiNode(v).getInfo() == "unvisited":
-                self.dfs_inner(v, stack)
-
-        graph_reverse = graph.graph_transpose()
-        connected_component =[]
-        while not stack.empty():
-            vertex = graph_reverse.get_node(stack.get())
-            if vertex.getInfo() == "unvisited"
-
-    def dfs_inner(self, v, stack):
-        DiNode(v).setInfo("visited")
-        for neighbour, weight in self.graph.all_out_edges_of_node(v).items():
-            vertex = self.graph.get_node(neighbour)
+        for key in self.graph.vertices:
+            vertex = self.graph.get_node(key)
             if vertex.getInfo() == "unvisited":
                 self.dfs_inner(vertex, stack)
 
-        stack.put(v)
+        components = []
+        graph_transpose = self.graph.graph_transpose()
+        while not stack.empty():
+            vertex = graph_transpose.get_node(stack.get().key)
+            if vertex.getInfo() == "unvisited":
+                component = []
+                components.append(component)
+                self.dfs_reverse(vertex, component, graph_transpose)
 
-    def dfs_reverse
+        return components
+
+
+    def dfs_reverse(self, vertex, component, graph_t):
+        vertex.setInfo("visited")
+        component.append(vertex)
+        for neighbour, weight in graph_t.all_out_edges_of_node(vertex.key).items():
+            v = graph_t.get_node(neighbour)
+            if v.getInfo() == "unvisited":
+                self.dfs_reverse(v, component, graph_t)
+
+
+    def dfs_inner(self, vertex, stack):
+        vertex.setInfo("visited")
+        for neighbour, weight in self.graph.all_out_edges_of_node(vertex.key).items():
+            v = self.graph.get_node(neighbour)
+            if v.getInfo() == "unvisited":
+                self.dfs_inner(v, stack)
+
+        stack.put(vertex)
+
 
 if __name__ == '__main__':
     graph = DiGraph()
@@ -149,4 +164,4 @@ if __name__ == '__main__':
     graph.add_edge(7, 5, 4)
     graph.add_edge(4, 8, 5)
     galgo = GraphAlgo(graph)
-    print(galgo.shortest_path(8, 1))
+    galgo.dfs()

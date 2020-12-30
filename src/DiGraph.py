@@ -83,19 +83,12 @@ class DiGraph(GraphInteface):
 
         return False
 
-    def edge_transpose(self) -> list:
-        transpose_list = []
-        for tup in self.edges:
-            n = (tup[1], tup[0], tup[2])
-            transpose_list.append(n)
-        return transpose_list
-
     def graph_transpose(self):
         graph_t = DiGraph()
         for key in self.vertices:
             graph_t.add_node(key)
-        for neighbour in self.edge_transpose():
-            graph_t.add_edge(neighbour[0], neighbour[1], neighbour[2])
+        for neighbour in self.edges:
+            graph_t.add_edge(neighbour[1], neighbour[0], neighbour[2])
         return graph_t
 
     def v_size(self) -> int:
