@@ -1,10 +1,10 @@
 from builtins import *
 from src.DiNode import DiNode
-from src.GraphInterface import GraphInteface
+from src.GraphInterface import GraphInterface
 import sys
 
 
-class DiGraph(GraphInteface):
+class DiGraph(GraphInterface):
 
     def __init__(self):
         self.vertices = {}

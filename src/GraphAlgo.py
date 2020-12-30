@@ -5,9 +5,11 @@ from src.DiNode import DiNode
 import json
 from queue import *
 import sys
+import math
 
 
 class GraphAlgo(GraphAlgoInterface):
+    epsilon = 0.0000001
 
     def __init__(self, g: DiGraph):
         self.graph = g
@@ -69,6 +71,7 @@ class GraphAlgo(GraphAlgoInterface):
     def dijkstra(self, source: int, destination: int) -> (float, list):
         if (source in self.graph.vertices and destination in self.graph.vertices
                 and source != destination):
+            self.get_graph().Reset()
             pqueue = PriorityQueue()
             src = self.graph.get_node(source)
             src.setWeight(0)
@@ -94,16 +97,17 @@ class GraphAlgo(GraphAlgoInterface):
                 while current is not src:
                     for key, weight in self.graph.all_in_edges_of_node(current.key).items():
                         neighbour = self.graph.get_node(key)
-                        if current.weight - weight == neighbour.weight:
+                        if current.weight - weight < self.epsilon:
                             path.append(neighbour)
                             squeue.put(neighbour)
 
-                        current = squeue.get()
+                    current = squeue.get()
 
-                dest = graph.get_node(destination).getWeight()
-                path.reverse()
-                ans = (dest, path)
-                return ans
+            dest = self.graph.get_node(destination).getWeight()
+            path.reverse()
+            ans = (dest, path)
+            return ans
+        return None
 
     def dfs(self):
         self.graph.Reset()
@@ -124,7 +128,6 @@ class GraphAlgo(GraphAlgoInterface):
 
         return components
 
-
     def dfs_reverse(self, vertex, component, graph_t):
         vertex.setInfo("visited")
         component.append(vertex)
@@ -132,7 +135,6 @@ class GraphAlgo(GraphAlgoInterface):
             v = graph_t.get_node(neighbour)
             if v.getInfo() == "unvisited":
                 self.dfs_reverse(v, component, graph_t)
-
 
     def dfs_inner(self, vertex, stack):
         vertex.setInfo("visited")
@@ -145,23 +147,15 @@ class GraphAlgo(GraphAlgoInterface):
 
 
 if __name__ == '__main__':
-    graph = DiGraph()
-    graph.add_node(1)
-    graph.add_node(2)
-    graph.add_node(3)
-    graph.add_node(4)
-    graph.add_node(5)
-    graph.add_node(6)
-    graph.add_node(7)
-    graph.add_node(8)
-    graph.add_edge(1, 2, 1.25)
-    graph.add_edge(2, 3, 1.25)
-    graph.add_edge(3, 1, 2.25)
-    graph.add_edge(1, 4, 3)
-    graph.add_edge(4, 5, 4)
-    graph.add_edge(5, 6, 4)
-    graph.add_edge(6, 7, 4)
-    graph.add_edge(7, 5, 4)
-    graph.add_edge(4, 8, 5)
-    galgo = GraphAlgo(graph)
-    galgo.dfs()
+    g = DiGraph()
+    for n in range(4):
+        g.add_node(n)
+    g.add_edge(0, 1, 1)
+    g.add_edge(1, 0, 1.1)
+    g.add_edge(1, 2, 1.3)
+    g.add_edge(2, 3, 1.1)
+    g.add_edge(1, 3, 1.9)
+    g.remove_edge(1, 3)
+    g.add_edge(1, 3, 10)
+    galgo = GraphAlgo(g)
+    print(galgo.shortest_path(0, 3))
