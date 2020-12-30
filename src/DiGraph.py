@@ -109,8 +109,24 @@ class DiGraph(GraphInterface):
             vertex.setInfo("unvisited")
             vertex.setWeight(sys.maxsize)
 
-    def __str__(self):
-        return f"Graph: |V|={self.v},|E|={self.e}"
+    def __repr__(self) -> str:
+
+        main_str = f"Graph: |V|={self.v} , |E|={self.e}\n"
+        main_str += "{"
+        counter = 0
+        for vertex in self.vertices.keys():
+            counter += 1
+            main_str += f"{vertex}: {vertex}: |edges out| "
+            main_str += f"{len(self.all_out_edges_of_node(vertex).keys())} "
+            main_str += "|edges in| "
+            main_str += f"{len(self.all_in_edges_of_node(vertex).keys())} "
+
+            if len(self.vertices.keys())== counter:
+                main_str += "}"
+            else:
+                main_str += ", "
+
+        return main_str
 
 
 if __name__ == '__main__':

@@ -1,3 +1,5 @@
+from typing import List
+
 from src import GraphInterface
 from src.GraphAlgoInterface import GraphAlgoInterface
 from src.DiGraph import DiGraph
@@ -9,9 +11,9 @@ import math
 
 
 class GraphAlgo(GraphAlgoInterface):
-    epsilon = 0.0000001
+    epsilon = 0.000001
 
-    def __init__(self, g: DiGraph):
+    def __init__(self, g: DiGraph = None):
         self.graph = g
 
     def get_graph(self) -> GraphInterface:
@@ -65,8 +67,10 @@ class GraphAlgo(GraphAlgoInterface):
         return False
 
     def shortest_path(self, source: int, destination: int) -> (float, list):
-        tuple_ans = self.dijkstra(source, destination)
-        return tuple_ans
+        tuple_path = self.dijkstra(source, destination)
+        if tuple_path is None:
+            return 'inf', None
+        return tuple_path
 
     def dijkstra(self, source: int, destination: int) -> (float, list):
         if (source in self.graph.vertices and destination in self.graph.vertices
@@ -97,7 +101,7 @@ class GraphAlgo(GraphAlgoInterface):
                 while current is not src:
                     for key, weight in self.graph.all_in_edges_of_node(current.key).items():
                         neighbour = self.graph.get_node(key)
-                        if current.weight - weight < self.epsilon:
+                        if math.isclose(current.weight - weight, neighbour.weight, rel_tol=1e-5):
                             path.append(neighbour)
                             squeue.put(neighbour)
 
@@ -105,9 +109,20 @@ class GraphAlgo(GraphAlgoInterface):
 
             dest = self.graph.get_node(destination).getWeight()
             path.reverse()
-            ans = (dest, path)
-            return ans
+
+            return dest, path
         return None
+
+    def connected_component(self, key: int) -> list:
+        if key in self.graph.vertices.keys():
+            list_components = self.dfs()
+            for component in list_components:
+                if key in component:
+                    return component
+
+    def connected_components(self) -> List[list]:
+        if len(self.graph.vertices) > 0:
+            return self.dfs()
 
     def dfs(self):
         self.graph.Reset()
@@ -130,7 +145,7 @@ class GraphAlgo(GraphAlgoInterface):
 
     def dfs_reverse(self, vertex, component, graph_t):
         vertex.setInfo("visited")
-        component.append(vertex)
+        component.append(vertex.key)
         for neighbour, weight in graph_t.all_out_edges_of_node(vertex.key).items():
             v = graph_t.get_node(neighbour)
             if v.getInfo() == "unvisited":
@@ -158,4 +173,4 @@ if __name__ == '__main__':
     g.remove_edge(1, 3)
     g.add_edge(1, 3, 10)
     galgo = GraphAlgo(g)
-    print(galgo.shortest_path(0, 3))
+    print(galgo.connected_component(1))
