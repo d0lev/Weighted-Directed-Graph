@@ -1,10 +1,13 @@
+import random
 from typing import List
-
 from src import GraphInterface
 from src.GraphAlgoInterface import GraphAlgoInterface
 from src.DiGraph import DiGraph
 from src.DiNode import DiNode
 import json
+import networkx as nx
+import matplotlib as mpl
+import matplotlib.pyplot as plt
 from queue import *
 import sys
 import math
@@ -160,28 +163,15 @@ class GraphAlgo(GraphAlgoInterface):
 
         stack.put(vertex)
 
+    def plot_graph(self) -> None:
+        g = nx.Graph()
+        for x in list(self.graph.edges):
+            g.add_edges_from([(x[0],x[1])])
+        nx.draw(g, node_size=700, node_color='cyan',with_labels=True)
+        plt.show()
 
 if __name__ == '__main__':
     graph = DiGraph()
-    for i in range(1, 11):
-        graph.add_node(i)
-    graph.add_edge(1, 2, 5)
-    graph.add_edge(1, 8, 4)
-    graph.add_edge(9, 10, 0)
-    graph.add_edge(5, 2, 3)
-    graph.add_edge(1, 5, 7)
-    graph.add_edge(2, 10, 10)
-    algo = GraphAlgo(graph)
-    print(algo.shortest_path(1, 10))
-    print(algo.shortest_path(1, 9))
-    print(algo.shortest_path(1, 11))
-    print(algo.shortest_path(1, 2))
-    graph.remove_edge(1, 2)
-    print(algo.shortest_path(1, 5))
-    print(algo.shortest_path(1, 2))
-    print(algo.shortest_path(1, 10))
-    print(algo.shortest_path(9, 10))
-    graph.remove_node(2)
-    graph.add_edge(5, 10, 1)
-    print(algo.shortest_path(1, 10))
-
+    algos = GraphAlgo(graph)
+    algos.load_from_json("../data/A0")
+    algos.plot_graph()
