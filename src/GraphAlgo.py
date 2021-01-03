@@ -175,8 +175,9 @@ class GraphAlgo(GraphAlgoInterface):
             position = y.position
             x_values.append(position[0])
             y_values.append(position[1])
+            plt.plot(position[0],position[1], "D-")
 
-        plt.plot(x_values, y_values, "D-")
+        # plt.plot(x_values, y_values, "D-")
 
         plt.style.use('bmh')
         plt.legend()
@@ -185,5 +186,5 @@ class GraphAlgo(GraphAlgoInterface):
 if __name__ == '__main__':
     graph = DiGraph()
     algos = GraphAlgo(graph)
-    algos.load_from_json("../data/A5")
+    algos.load_from_json("../data/A0")
     algos.plot_graph()
