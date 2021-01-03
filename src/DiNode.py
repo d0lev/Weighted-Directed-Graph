@@ -6,7 +6,7 @@ class DiNode:
     def __init__(self, key):
         """A Default constructor method"""
         self.key = key
-        self.position = (0, 0, 0)
+        self.position = None
         self.info = "unvisited"
         self.weight = sys.maxsize
 

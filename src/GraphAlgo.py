@@ -1,5 +1,8 @@
 import random
 from typing import List
+
+from matplotlib.ticker import MultipleLocator, AutoMinorLocator
+
 from src import GraphInterface
 from src.GraphAlgoInterface import GraphAlgoInterface
 from src.DiGraph import DiGraph
@@ -26,10 +29,16 @@ class GraphAlgo(GraphAlgoInterface):
         with open(file_name, mode='w') as my_file:
             for vertex in self.graph.get_all_v():
                 v = self.graph.get_node(vertex)
-                pos = str(v.getPosition()[0]) + "," + str(v.getPosition()[1]) + "," + str(v.getPosition()[2])
-                id = v.getKey()
-                vertex_dict = {'pos': pos, "id": id}
-                graph_json["Nodes"].append(vertex_dict)
+                if v.getPosition() is None:
+                    id = v.getKey()
+                    vertex_dict = {"id": id}
+                    graph_json["Nodes"].append(vertex_dict)
+                else:
+                    pos = str(v.getPosition()[0]) + "," + str(v.getPosition()[1]) + "," + str(v.getPosition()[2])
+                    id = v.getKey()
+                    vertex_dict = {'pos': pos, "id": id}
+                    graph_json["Nodes"].append(vertex_dict)
+
 
             for edge in self.graph.edges:
                 src = edge[0]
@@ -163,21 +172,25 @@ class GraphAlgo(GraphAlgoInterface):
         stack.put(vertex)
 
     def plot_graph(self) -> None:
+        plt.grid(color='grey', linestyle=':', linewidth=0.5 )
+        for edge in self.get_graph().edges:
+            source = self.get_graph().get_node(edge[0])
+            destination = self.get_graph().get_node(edge[1])
+            weight = self.get_graph().get_node(edge[2])
+            x_list = [source.getPosition()[0], destination.getPosition()[0]]
+            y_list = [source.getPosition()[1], destination.getPosition()[1]]
+            dest_x = destination.getPosition()[0] - source.getPosition()[0]
+            dest_y = destination.getPosition()[1] - source.getPosition()[1]
+            plt.plot(x_list,y_list,color = "purple")
 
-        for x in self.graph.edges:
-            src_node_pos = self.graph.get_node(x[0]).position
-            dest_node_pos = self.graph.get_node(x[1]).position
-            x_value = [src_node_pos[0], dest_node_pos[0]]
-            y_value = [src_node_pos[1], dest_node_pos[1]]
-            plt.plot(x_value, y_value, "D-")
-            plt.arrow(src_node_pos[0], src_node_pos[1], 0.002, 0.002, width=0.003)
+        for key , vertex in self.get_graph().get_all_v().items():
+            plt.annotate(str(key),(vertex.getPosition()[0]-0.0002, vertex.getPosition()[1]+0.00013),color = 'green')
+            plt.plot(vertex.getPosition()[0], vertex.getPosition()[1],".",color = 'black',markersize = 14)
 
-        plt.style.use('bmh')
-        plt.legend()
         plt.show()
-
 if __name__ == '__main__':
     graph = DiGraph()
     algos = GraphAlgo(graph)
     algos.load_from_json("../data/A0")
     algos.plot_graph()
+
