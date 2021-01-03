@@ -170,7 +170,7 @@ class GraphAlgo(GraphAlgoInterface):
             x_value = [src_node_pos[0], dest_node_pos[0]]
             y_value = [src_node_pos[1], dest_node_pos[1]]
             plt.plot(x_value, y_value, "D-")
-            plt.arrow(src_node_pos[0],src_node_pos[1],0.002,0.002,width=0.003)
+            plt.arrow(src_node_pos[0], src_node_pos[1], 0.002, 0.002, width=0.003)
 
         plt.style.use('bmh')
         plt.legend()
