@@ -163,21 +163,14 @@ class GraphAlgo(GraphAlgoInterface):
         stack.put(vertex)
 
     def plot_graph(self) -> None:
-        # g = nx.Graph()
-        # for x in list(self.graph.edges):
-        #     g.add_edges_from([(x[0],x[1])])
-        # nx.draw(g, node_size=700, node_color='cyan',with_labels=True)
-        # plt.show()
 
-        x_values = []
-        y_values = []
-        for x, y in self.graph.vertices.items():
-            position = y.position
-            x_values.append(position[0])
-            y_values.append(position[1])
-            plt.plot(position[0],position[1], "D-")
-
-        # plt.plot(x_values, y_values, "D-")
+        for x in self.graph.edges:
+            src_node_pos = self.graph.get_node(x[0]).position
+            dest_node_pos = self.graph.get_node(x[1]).position
+            x_value = [src_node_pos[0], dest_node_pos[0]]
+            y_value = [src_node_pos[1], dest_node_pos[1]]
+            plt.plot(x_value, y_value, "D-")
+            plt.arrow(src_node_pos[0],src_node_pos[1],0.002,0.002,width=0.003)
 
         plt.style.use('bmh')
         plt.legend()
