@@ -5,7 +5,6 @@ from src.GraphAlgoInterface import GraphAlgoInterface
 from src.DiGraph import DiGraph
 from src.DiNode import DiNode
 import json
-import networkx as nx
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 from queue import *
@@ -164,14 +163,27 @@ class GraphAlgo(GraphAlgoInterface):
         stack.put(vertex)
 
     def plot_graph(self) -> None:
-        g = nx.Graph()
-        for x in list(self.graph.edges):
-            g.add_edges_from([(x[0],x[1])])
-        nx.draw(g, node_size=700, node_color='cyan',with_labels=True)
+        # g = nx.Graph()
+        # for x in list(self.graph.edges):
+        #     g.add_edges_from([(x[0],x[1])])
+        # nx.draw(g, node_size=700, node_color='cyan',with_labels=True)
+        # plt.show()
+
+        x_values = []
+        y_values = []
+        for x, y in self.graph.vertices.items():
+            position = y.position
+            x_values.append(position[0])
+            y_values.append(position[1])
+
+        plt.plot(x_values, y_values, "D-")
+
+        plt.style.use('bmh')
+        plt.legend()
         plt.show()
 
 if __name__ == '__main__':
     graph = DiGraph()
     algos = GraphAlgo(graph)
-    algos.load_from_json("../data/A0")
+    algos.load_from_json("../data/A5")
     algos.plot_graph()
