@@ -145,3 +145,4 @@ if __name__ == '__main__':
     graph.add_edge(5, 3, 1.7)
     graph.add_edge(5, 4, 1.4)
     print(graph.adjacency.items())
+    print(graph.e_size())

@@ -1,9 +1,9 @@
 import sys
-
+import unittest
 
 class DiNode:
 
-    def __init__(self, key):
+    def __init__(self,key):
         """A Default constructor method"""
         self.key = key
         self.position = None

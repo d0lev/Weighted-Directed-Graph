@@ -193,7 +193,6 @@ class GraphAlgo(GraphAlgoInterface):
         plt.title("Weighted Directed Graph Visualization")
         plt.xlabel("The x axis")
         plt.ylabel("The y axis")
-        plt.legend()
         plt.show()
 
 if __name__ == '__main__':

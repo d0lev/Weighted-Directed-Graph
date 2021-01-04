@@ -1,7 +1,8 @@
 from DiGraph import DiGraph
 from GraphAlgo import GraphAlgo
+from GraphGenerator import GraphGenerator
 from DiNode import DiNode
-
+import networkx as nx
 
 def check():
     """
