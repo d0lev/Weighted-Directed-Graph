@@ -15,6 +15,12 @@ class DiGraph(GraphInterface):
         self.v = 0
 
     def add_node(self, key: int, pos: tuple = None) -> bool:
+        """
+        adding a node in the graph
+        :param key: a key of a node
+        :param pos: a position (x,y,z) to be inserted to the new node
+        :return: False if the node is already exits in this graph
+        """
         if key not in self.vertices:
             node = DiNode(key)
             if pos is not None:
@@ -28,10 +34,21 @@ class DiGraph(GraphInterface):
             return False
 
     def get_node(self, key) -> DiNode:
+        """
+        :param key: a key of a node
+        :return: the node that associated with the initial key
+        """
         if key in self.vertices.keys():
             return self.vertices[key]
 
     def add_edge(self, source, destination, weight):
+        """
+        adding an edge between two nodes that associated with the initial keys
+        :param source: the key of the source node
+        :param destination: the key of the destination node
+        :param weight: the weight of this edge (must be at least 0)
+        :return: False if the weight is negative or if the nodes are not exits
+        """
         if source in self.vertices.keys() and destination in self.vertices.keys() and weight >= 0:
 
             if destination in self.adjacency[source]:
@@ -51,9 +68,18 @@ class DiGraph(GraphInterface):
             return False
 
     def getEdge(self, source, destination):
+        """
+        :param source: the key of the source node
+        :param destination: the key of the destination node
+        :return: the weight of the edge that associated with the initial keys
+        """
         return self.adjacency[source][destination]
 
     def all_in_edges_of_node(self, key: int) -> dict:
+        """
+        :param key: a key of the node
+        :return: a dictionary that represents all the nodes that pointing of the initial key
+        """
         if key in self.vertices:
             in_edges = {}
             for vertex in self.vertices:
@@ -63,10 +89,19 @@ class DiGraph(GraphInterface):
             return in_edges
 
     def all_out_edges_of_node(self, key: int) -> dict:
+        """
+        :param key: a key of a node
+        :return: a dictionary that represents all the nodes that pointed by the initial key
+        """
         if key in self.vertices:
             return self.adjacency[key]
 
     def remove_edge(self, source: int, destination: int) -> bool:
+        """
+        :param source: the key of the source node
+        :param destination: the key of the destination node
+        :return: the edge between two nodes in the graph
+        """
         if source in self.vertices.keys() and destination in self.vertices.keys():
             if destination in self.adjacency[source]:
                 weight = self.adjacency[source][destination]
@@ -78,6 +113,10 @@ class DiGraph(GraphInterface):
         return False
 
     def remove_node(self, key: int) -> bool:
+        """
+        :param key: a key of a node
+        :return: True if the node was deleted
+        """
         if key in self.vertices:
 
             for vertex in list(self.all_in_edges_of_node(key)):
@@ -96,6 +135,9 @@ class DiGraph(GraphInterface):
         return False
 
     def graph_transpose(self):
+        """
+        :return: the directed weighted graph transpose
+        """
         graph_t = DiGraph()
         for key in self.vertices:
             graph_t.add_node(key)
@@ -104,15 +146,27 @@ class DiGraph(GraphInterface):
         return graph_t
 
     def v_size(self) -> int:
+        """
+        :return: the number of nodes in the graph
+        """
         return self.v
 
     def e_size(self) -> int:
+        """
+        :return: the number of edges in the graph
+        """
         return self.e
 
     def get_mc(self) -> int:
+        """
+        :return: the mode count of the graph
+        """
         return self.mc
 
     def get_all_v(self) -> dict:
+        """
+        :return: a dictionary of the nodes in the graph
+        """
         return self.vertices
 
     def Reset(self):
