@@ -27,16 +27,28 @@ class DiGraph(GraphInterface):
         else:
             return False
 
+    def getEdge(self,source,destination):
+        return self.adjacency[source][destination]
+
     def get_node(self, key) -> DiNode:
         if key in self.vertices.keys():
             return self.vertices[key]
 
     def add_edge(self, source, destination, weight):
-        if source in self.vertices.keys() and destination in self.vertices.keys():
+        if source in self.vertices.keys() and destination in self.vertices.keys() and weight >= 0:
+
+            if destination in self.adjacency[source]:
+                weight = self.getEdge(source, destination)
+                tup = (source, destination, weight)
+                self.edges.remove(tup)
+
+            else:
+                self.e = self.e + 1
+
             self.adjacency[source][destination] = weight
             self.edges.append((source, destination, weight))
-            self.e = self.e + 1
             self.mc = self.mc + 1
+
             return True
         else:
             return False

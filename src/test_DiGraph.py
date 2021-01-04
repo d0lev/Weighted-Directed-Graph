@@ -1,6 +1,7 @@
 from unittest import TestCase
 from src.DiGraph import DiGraph
 
+
 class TestDiGraph(TestCase):
 
     def setUp(self) -> None:
@@ -27,12 +28,16 @@ class TestDiGraph(TestCase):
     def test_add_edge(self):
         self.assertFalse(self.graph.add_edge(1, 4, -9))
         self.assertFalse(self.graph.add_edge(93, 4, -9))
-        self.assertTrue(self.graph.add_edge(1,3,0.34))
+        self.assertTrue(self.graph.add_edge(1, 3, 0.34))
+        print(self.graph.edges)
+
+    def test_all_in_edges_of_node(self):
+        actual = list(self.graph.all_in_edges_of_node(2).keys())
+        expectd = [3, 6]
+        self.assertEqual(actual, expectd)
 
 
-    # def test_all_in_edges_of_node(self):
-    #     self.fail()
-    #
+
     # def test_all_out_edges_of_node(self):
     #     self.fail()
     #
