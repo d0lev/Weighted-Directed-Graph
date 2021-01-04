@@ -172,22 +172,30 @@ class GraphAlgo(GraphAlgoInterface):
         stack.put(vertex)
 
     def plot_graph(self) -> None:
-        plt.grid(color='grey', linestyle=':', linewidth=0.5 )
+        plt.grid(color='grey', linestyle=':', linewidth=0.5)
         for edge in self.get_graph().edges:
             source = self.get_graph().get_node(edge[0])
             destination = self.get_graph().get_node(edge[1])
-            weight = self.get_graph().get_node(edge[2])
+
+            if source.getPosition() is None:
+                source.setPosition(random.uniform(0,40),random.uniform(0,40),0)
+            if destination.getPosition() is None:
+                destination.setPosition(random.uniform(0, 40), random.uniform(0, 40), 0)
+
             x_list = [source.getPosition()[0], destination.getPosition()[0]]
             y_list = [source.getPosition()[1], destination.getPosition()[1]]
-            dest_x = destination.getPosition()[0] - source.getPosition()[0]
-            dest_y = destination.getPosition()[1] - source.getPosition()[1]
             plt.plot(x_list,y_list,color = "purple")
 
         for key , vertex in self.get_graph().get_all_v().items():
-            plt.annotate(str(key),(vertex.getPosition()[0]-0.0002, vertex.getPosition()[1]+0.00013),color = 'green')
+            plt.annotate(str(key), (vertex.getPosition()[0] - 0.0002, vertex.getPosition()[1] + 0.00013), color='green')
             plt.plot(vertex.getPosition()[0], vertex.getPosition()[1],".",color = 'black',markersize = 14)
 
+        plt.title("Weighted Directed Graph Visualization")
+        plt.xlabel("The x axis")
+        plt.ylabel("The y axis")
+        plt.legend()
         plt.show()
+
 if __name__ == '__main__':
     graph = DiGraph()
     algos = GraphAlgo(graph)
