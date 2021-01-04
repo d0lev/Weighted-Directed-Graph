@@ -1,5 +1,5 @@
 
-<p><img src="https://i.ibb.co/y468Qt0/wp6690890-neural-networks-wallpapers.jpg" referrerpolicy="no-referrer" alt="wp6690890-neural-networks-wallpapers"></p>
+<p><img src="https://i.ibb.co/BqMy57q/DDDDDDDDDDDDDD.jpg" referrerpolicy="no-referrer" alt="wp6690890-neural-networks-wallpapers"></p>
 <p>&nbsp;</p>
 <h2>Directed Weighted Graph</h2>
 <p>Project as part of the object-oriented course.</p>
