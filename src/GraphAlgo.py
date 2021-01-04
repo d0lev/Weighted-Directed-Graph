@@ -26,55 +26,63 @@ class GraphAlgo(GraphAlgoInterface):
 
     def save_to_json(self, file_name: str) -> bool:
         graph_json = {"Nodes": [], "Edges": []}
-        with open(file_name, mode='w') as my_file:
-            for vertex in self.graph.get_all_v():
-                v = self.graph.get_node(vertex)
-                if v.getPosition() is None:
-                    id = v.getKey()
-                    vertex_dict = {"id": id}
-                    graph_json["Nodes"].append(vertex_dict)
-                else:
-                    pos = str(v.getPosition()[0]) + "," + str(v.getPosition()[1]) + "," + str(v.getPosition()[2])
-                    id = v.getKey()
-                    vertex_dict = {'pos': pos, "id": id}
-                    graph_json["Nodes"].append(vertex_dict)
 
+        try:
+            with open(file_name, mode='w') as my_file:
+                for vertex in self.graph.get_all_v():
+                    v = self.graph.get_node(vertex)
+                    if v.getPosition() is None:
+                        id = v.getKey()
+                        vertex_dict = {"id": id}
+                        graph_json["Nodes"].append(vertex_dict)
+                    else:
+                        pos = str(v.getPosition()[0]) + "," + str(v.getPosition()[1]) + "," + str(v.getPosition()[2])
+                        id = v.getKey()
+                        vertex_dict = {'pos': pos, "id": id}
+                        graph_json["Nodes"].append(vertex_dict)
 
-            for edge in self.graph.edges:
-                src = edge[0]
-                dest = edge[1]
-                weight = edge[2]
-                edge_dict = {"src": src, "dest": dest, "w": weight}
-                graph_json["Edges"].append(edge_dict)
+                for edge in self.graph.edges:
+                    src = edge[0]
+                    dest = edge[1]
+                    weight = edge[2]
+                    edge_dict = {"src": src, "dest": dest, "w": weight}
+                    graph_json["Edges"].append(edge_dict)
 
-            graph_json_str = json.dumps(graph_json)
-            my_file.write(graph_json_str)
-            return True
+                graph_json_str = json.dumps(graph_json)
+                my_file.write(graph_json_str)
+                return True
 
-        return False
+        except IOError:
+            return False
 
     def load_from_json(self, file_name: str) -> bool:
         graph_dis = DiGraph()
-        with open(file_name, mode='r') as my_file:
-            json_str = my_file.read()
-            graph_from_json = json.loads(json_str)
 
-        for vertex in graph_from_json['Nodes']:
-            pos = vertex.get('pos')
-            if pos is not None:
-                pos = tuple(map(float, vertex['pos'].split(',')))
-            key = vertex['id']
-            graph_dis.add_node(key, pos)
+        try:
+            with open(file_name, mode='r') as my_file:
+                json_str = my_file.read()
+                graph_from_json = json.loads(json_str)
 
-        for edge in graph_from_json['Edges']:
-            source = int(edge['src'])
-            destination = int(edge['dest'])
-            weight = float(edge['w'])
-            graph_dis.add_edge(source, destination, weight)
+            for vertex in graph_from_json['Nodes']:
+                pos = vertex.get('pos')
+                if pos is not None:
+                    pos = tuple(map(float, vertex['pos'].split(',')))
+                key = vertex['id']
+                graph_dis.add_node(key, pos)
 
-        self.graph = graph_dis
+            for edge in graph_from_json['Edges']:
+                source = int(edge['src'])
+                destination = int(edge['dest'])
+                weight = float(edge['w'])
+                graph_dis.add_edge(source, destination, weight)
+
+            self.graph = graph_dis
+        except IOError:
+            return False
+
         if self.graph is not None:
             return True
+
         return False
 
     def shortest_path(self, source: int, destination: int) -> (float, list):
@@ -178,26 +186,26 @@ class GraphAlgo(GraphAlgoInterface):
             destination = self.get_graph().get_node(edge[1])
 
             if source.getPosition() is None:
-                source.setPosition(random.uniform(0,40),random.uniform(0,40),0)
+                source.setPosition(random.uniform(0, 40), random.uniform(0, 40), 0)
             if destination.getPosition() is None:
                 destination.setPosition(random.uniform(0, 40), random.uniform(0, 40), 0)
 
             x_list = [source.getPosition()[0], destination.getPosition()[0]]
             y_list = [source.getPosition()[1], destination.getPosition()[1]]
-            plt.plot(x_list,y_list,color = "purple")
+            plt.plot(x_list, y_list, color="purple")
 
-        for key , vertex in self.get_graph().get_all_v().items():
+        for key, vertex in self.get_graph().get_all_v().items():
             plt.annotate(str(key), (vertex.getPosition()[0] - 0.0002, vertex.getPosition()[1] + 0.00013), color='green')
-            plt.plot(vertex.getPosition()[0], vertex.getPosition()[1],".",color = 'black',markersize = 14)
+            plt.plot(vertex.getPosition()[0], vertex.getPosition()[1], ".", color='black', markersize=14)
 
         plt.title("Weighted Directed Graph Visualization")
         plt.xlabel("The x axis")
         plt.ylabel("The y axis")
         plt.show()
 
+
 if __name__ == '__main__':
     graph = DiGraph()
     algos = GraphAlgo(graph)
     algos.load_from_json("../data/A0")
     algos.plot_graph()
-
