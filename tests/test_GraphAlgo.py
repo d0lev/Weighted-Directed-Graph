@@ -71,29 +71,42 @@ class TestGraphAlgo(TestCase):
         self.assertEqual(self.algorithms.get_graph().get_mc(), graph_loaded.get_mc())
         self.assertListEqual(self.algorithms.get_graph().edges, graph_loaded.edges)
         self.assertEqual(self.algorithms.get_graph().get_all_v().keys(), graph_loaded.get_all_v().keys())
+        self.assertEqual(self.algorithms.get_graph().adjacency.keys(), graph_loaded.adjacency.keys())
+        self.assertNotEqual(self.algorithms.get_graph(), graph_loaded)
+        self.assertEqual(str(self.algorithms.get_graph().vertices), str(graph_loaded.vertices))
+        self.assertEqual(str(self.algorithms.get_graph().adjacency), str(graph_loaded.adjacency))
 
+    def test_shortest_path(self):
+        self.assertTupleEqual(self.algorithms.shortest_path(243, 32), ('inf', None))
+        tup = self.algorithms.shortest_path(3, 6)
+        self.assertEqual(tup[0], 3.19)
+        self.assertEqual(str(tup[1]), str([3, 4, 6]))
+        self.assertTupleEqual(self.algorithms.shortest_path(0, 32), ('inf', None))
 
+    def test_dijkstra(self):
+        self.assertIsNone(self.algorithms.dijkstra(243, 32))
+        self.assertIsNone(self.algorithms.dijkstra(0, 32))
+        tup = self.algorithms.dijkstra(3, 6)
+        self.assertEqual(tup[0], 3.19)
+        self.assertEqual(str(tup[1]), str([3, 4, 6]))
 
-    # def test_shortest_path(self):
-    #     self.fail()
-    #
-    # def test_dijkstra(self):
-    #     self.fail()
-    #
-    # def test_connected_component(self):
-    #     self.fail()
-    #
-    # def test_connected_components(self):
-    #     self.fail()
-    #
-    # def test_dfs(self):
-    #     self.fail()
-    #
-    # def test_dfs_reverse(self):
-    #     self.fail()
-    #
-    # def test_dfs_inner(self):
-    #     self.fail()
-    #
-    # def test_plot_graph(self):
-    #     self.fail()
+    def test_connected_component(self):
+        lists = self.algorithms.connected_component(4)
+        self.assertEqual(str(lists), str([2, 6, 4]))
+        self.assertIsNone(self.algorithms.connected_component(40))
+        self.assertTrue(self.algorithms.get_graph().remove_node(4))
+        self.assertIsNone(self.algorithms.connected_component(4))
+
+    def test_connected_components(self):
+        graph_check = DiGraph()
+        algo = GraphAlgo(graph_check)
+        self.assertIsNone(algo.connected_components())
+        lists = self.algorithms.connected_components()
+        self.assertEqual(str(lists), str([[1], [0], [3], [2, 6, 4], [5]]))
+
+    def test_dfs(self):
+        lists = self.algorithms.connected_components()
+        self.assertEqual(str(lists), str([[1], [0], [3], [2, 6, 4], [5]]))
+
+    def test_plot_graph(self):
+        self.algorithms.plot_graph()
