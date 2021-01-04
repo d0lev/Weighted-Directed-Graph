@@ -1,8 +1,6 @@
 import random
 from typing import List
 
-from matplotlib.ticker import MultipleLocator, AutoMinorLocator
-
 from src import GraphInterface
 from src.GraphAlgoInterface import GraphAlgoInterface
 from src.DiGraph import DiGraph
@@ -202,10 +200,3 @@ class GraphAlgo(GraphAlgoInterface):
         plt.xlabel("The x axis")
         plt.ylabel("The y axis")
         plt.show()
-
-
-if __name__ == '__main__':
-    graph = DiGraph()
-    algos = GraphAlgo(graph)
-    algos.load_from_json("../data/A0")
-    algos.plot_graph()

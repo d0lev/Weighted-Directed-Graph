@@ -3,6 +3,7 @@ from src.DiNode import DiNode
 from src.GraphInterface import GraphInterface
 import sys
 
+
 class DiGraph(GraphInterface):
 
     def __init__(self):
@@ -25,7 +26,6 @@ class DiGraph(GraphInterface):
             return True
         else:
             return False
-
 
     def get_node(self, key) -> DiNode:
         if key in self.vertices.keys():
@@ -50,7 +50,7 @@ class DiGraph(GraphInterface):
         else:
             return False
 
-    def getEdge(self,source,destination):
+    def getEdge(self, source, destination):
         return self.adjacency[source][destination]
 
     def all_in_edges_of_node(self, key: int) -> dict:
@@ -133,10 +133,9 @@ class DiGraph(GraphInterface):
             main_str += "|edges in| "
             main_str += f"{len(self.all_in_edges_of_node(vertex).keys())} "
 
-            if len(self.vertices.keys())== counter:
+            if len(self.vertices.keys()) == counter:
                 main_str += "}"
             else:
                 main_str += ", "
 
         return main_str
-
