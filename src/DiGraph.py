@@ -8,7 +8,6 @@ class DiGraph(GraphInterface):
     def __init__(self):
         self.vertices = {}
         self.adjacency = {}
-        self.adjacency_t = {}
         self.edges = []
         self.e = 0
         self.mc = 0
@@ -27,8 +26,6 @@ class DiGraph(GraphInterface):
         else:
             return False
 
-    def getEdge(self,source,destination):
-        return self.adjacency[source][destination]
 
     def get_node(self, key) -> DiNode:
         if key in self.vertices.keys():
@@ -52,6 +49,9 @@ class DiGraph(GraphInterface):
             return True
         else:
             return False
+
+    def getEdge(self,source,destination):
+        return self.adjacency[source][destination]
 
     def all_in_edges_of_node(self, key: int) -> dict:
         if key in self.vertices:
