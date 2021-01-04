@@ -87,6 +87,7 @@ class DiGraph(GraphInterface):
                 self.remove_edge(key, vertex2)
 
             del self.vertices[key]
+            del self.adjacency[key]
             self.mc = self.mc + 1
             self.v = self.v - 1
 
