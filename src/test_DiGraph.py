@@ -108,7 +108,7 @@ class TestDiGraph(TestCase):
         self.graph.Reset()
         actual = 0
         for vertex in self.graph.vertices.values():
-            if vertex.getInfo() is "unvisited":
+            if vertex.getInfo() == "unvisited":
                 actual = actual + 1
 
         expected = 7
