@@ -9,7 +9,7 @@ class DiNode:
         self.position = None
         self.info = "unvisited"
         self.weight = sys.maxsize
-
+        daza
     def getKey(self):
         return self.key
 
