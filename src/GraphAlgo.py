@@ -16,7 +16,7 @@ import math
 class GraphAlgo(GraphAlgoInterface):
     epsilon = 0.000001
 
-    def __init__(self, g: DiGraph = None):
+    def __init__(self, g: DiGraph = None, s: GraphAlgoInterface = None):
         self.graph = g
 
     def get_graph(self) -> GraphInterface:
@@ -160,22 +160,40 @@ class GraphAlgo(GraphAlgoInterface):
 
         return components
 
-    def dfs_reverse(self, vertex, component, graph_t):
+
+    @staticmethod
+    def dfs_reverse(vertex, component, graph_t):
+        stack_dfs = LifoQueue()
+        stack_dfs.put(vertex)
         vertex.setInfo("visited")
-        component.append(vertex.key)
-        for neighbour, weight in graph_t.all_out_edges_of_node(vertex.key).items():
-            v = graph_t.get_node(neighbour)
-            if v.getInfo() == "unvisited":
-                self.dfs_reverse(v, component, graph_t)
+        while not stack_dfs.empty():
+            current = stack_dfs.get()
+            component.append(current.key)
+            for neighbour, weight in graph_t.all_out_edges_of_node(current.key).items():
+                v = graph_t.get_node(neighbour)
+                if v.getInfo() == "unvisited":
+                    v.setInfo("visited")
+                    stack_dfs.put(v)
+
 
     def dfs_inner(self, vertex, stack):
-        vertex.setInfo("visited")
-        for neighbour, weight in self.graph.all_out_edges_of_node(vertex.key).items():
-            v = self.graph.get_node(neighbour)
-            if v.getInfo() == "unvisited":
-                self.dfs_inner(v, stack)
+            daza_stack = LifoQueue()
+            stack_bfs = LifoQueue()
+            daza_stack.put(vertex)
+            stack_bfs.put(vertex)
+            while not stack_bfs.empty():
+                current = stack_bfs.get()
+                current.setInfo("visited")
+                for neighbour in self.graph.all_out_edges_of_node(current.key).keys():
+                    w = self.graph.get_node(neighbour)
+                    if w.getInfo() == "unvisited":
+                        w.setInfo("visited")
+                        stack_bfs.put(w)
+                        daza_stack.put(w)
 
-        stack.put(vertex)
+            while not daza_stack.empty():
+                stack.put(daza_stack.get())
+
 
     def plot_graph(self) -> None:
         plt.grid(color='grey', linestyle=':', linewidth=0.5)
