@@ -1,10 +1,5 @@
-from src import *
-from src import GraphInterface
-from src.GraphAlgoInterface import GraphAlgoInterface
 from src.DiGraph import DiGraph
-from src.DiNode import DiNode
 import random
-
 
 class GraphGenerator:
 
