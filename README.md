@@ -51,4 +51,4 @@
 <p>&nbsp;</p>
 <h3><u>Directed Weighted Graph visualization</u></h3>
 <p>&nbsp;</p>
-<a href="https://ibb.co/vJLKhD4"><img src="https://i.ibb.co/8jPSbXg/image-20210111170633382.png" alt="image-20210111170633382" border="0"></a>
+<a href="https://ibb.co/Cw5QbzX"><img src="https://i.ibb.co/rQGHxmL/image-20210111170240724.png" alt="image-20210111170240724" border="0"></a>
