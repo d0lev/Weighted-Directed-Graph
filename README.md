@@ -1,4 +1,4 @@
-<p><img src="https://i.ibb.co/Fnczy49/DDDDDDDDDDDDDD.jpg" referrerpolicy="no-referrer" alt="wp6690890-neural-networks-wallpapers"></p>
+<p><img src="C:\Users\dolev\OneDrive\שולחן העבודה\Fam\wp6690890-neural-networks-wallpapers.jpg" referrerpolicy="no-referrer" alt="wp6690890-neural-networks-wallpapers"></p>
 <p>&nbsp;</p>
 <h2>Directed Weighted Graph</h2>
 <p>Project as part of the object-oriented course.</p>
@@ -30,7 +30,7 @@
 <figure><table>
 <thead>
 <tr><th>Data members</th><th>Description</th></tr></thead>
-<tbody><tr><td>key</td><td>represent the key of each node </td></tr><tr><td>position</td><td>represent the location of the node (tuple (x,y,z))</td></tr><tr><td>info</td><td>represent the info of each node </td></tr><tr><td>weight</td><td>represent the weight of each node</td></tr></tbody>
+<tbody><tr><td>key</td><td>represent the key of each node</td></tr><tr><td>position</td><td>represent the location of the node (tuple (x,y,z))</td></tr><tr><td>info</td><td>represent the info of each node</td></tr><tr><td>weight</td><td>represent the weight of each node</td></tr></tbody>
 </table></figure>
 <figure><table>
 <thead>
@@ -49,3 +49,6 @@
 <tbody><tr><td>get_graph</td><td>return a graph object</td></tr><tr><td>shortest_path</td><td>return tuple of two objects (length of the path, list of nodes that are in the path)</td></tr><tr><td>connected_component</td><td>return a list that represent the strongly component that associated with the initial key</td></tr><tr><td>connected_components</td><td>return a list of lists that representing the strongly components in the graph</td></tr><tr><td>plot_graph</td><td>making a graphic user interface by using the library mathplotlib</td></tr><tr><td>save_to_json</td><td>graph object serialization</td></tr><tr><td>load_from_json</td><td>graph object deserialization</td></tr></tbody>
 </table></figure>
 <p>&nbsp;</p>
+<h3><u>Directed Weighted Graph visualization</u></h3>
+<p>&nbsp;</p>
+<a href="https://ibb.co/vJLKhD4"><img src="https://i.ibb.co/8jPSbXg/image-20210111170633382.png" alt="image-20210111170633382" border="0"></a>
