@@ -25,20 +25,20 @@ class Analysis:
     def getGraph(self):
         return self.graph.graph
 
-    def NetworkX(self,tup=None):
+    def NetworkX(self, tup=None):
         graphnx = nx.DiGraph()
         vertices = list(self.getGraph().vertices.keys())
         graphnx.add_nodes_from(vertices)
 
         for edge in self.getGraph().edges:
-            graphnx.add_edge(edge[0], edge[1],weight=edge[2])
+            graphnx.add_edge(edge[0], edge[1], weight=edge[2])
 
         print("NetworkX :")
         print("==========================================================")
         print("shortest path :\n")
-        length = nx.shortest_path_length(graphnx, source=tup[0].key, target=tup[1].key,method="dijkstra")
+        length = nx.shortest_path_length(graphnx, source=tup[0].key, target=tup[1].key, method="dijkstra")
         start_time = time.time()
-        path = nx.shortest_path(graphnx, source=tup[0].key, target=tup[1].key,method="dijkstra",weight="weight")
+        path = nx.shortest_path(graphnx, source=tup[0].key, target=tup[1].key, method="dijkstra", weight="weight")
         time_execution = time.time() - start_time
         print(f"The shortest path between {tup[0].key} and {tup[1].key} is : {length} \n"
               f"And the path is : {path} ")
@@ -51,8 +51,6 @@ class Analysis:
         print(f"The strongly components of graph is : \n"
               f"{components}\n")
         print("The time execution is : %s\n" % time_execution)
-
-
 
     def Python(self, str=None):
         self.graph.load_from_json(str)
@@ -82,7 +80,8 @@ class Analysis:
         print(f"The strongly components of graph is : \n"
               f"{components}\n")
         print("The time execution is : %s\n" % time_execution)
-        self.NetworkX((source,destination))
+        self.NetworkX((source, destination))
+
 
 if __name__ == '__main__':
     G = Analysis()

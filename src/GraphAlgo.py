@@ -1,12 +1,9 @@
 import random
 from typing import List
-
 from src import GraphInterface
 from src.GraphAlgoInterface import GraphAlgoInterface
 from src.DiGraph import DiGraph
-from src.DiNode import DiNode
 import json
-import matplotlib as mpl
 import matplotlib.pyplot as plt
 from queue import *
 import sys
@@ -14,15 +11,27 @@ import math
 
 
 class GraphAlgo(GraphAlgoInterface):
-    epsilon = 0.000001
 
-    def __init__(self, g: DiGraph = None, s: GraphAlgoInterface = None):
+    def __init__(self, g: DiGraph = None):
+        """
+        Init the graph on which this set of algorithms operates on.
+        :param g: a directed graph
+        """
         self.graph = g
 
     def get_graph(self) -> GraphInterface:
+        """
+        :return: the underlying graph of which this class works.
+        """
         return self.graph
 
     def save_to_json(self, file_name: str) -> bool:
+        """
+        A method that performs graph object serialization.
+        It serialize it to a JSON file, and save it in the given path.
+        :param file_name: The path to the out file
+        :return: True if the save was successful, False o.w.
+        """
         graph_json = {"Nodes": [], "Edges": []}
 
         try:
@@ -54,6 +63,12 @@ class GraphAlgo(GraphAlgoInterface):
             return False
 
     def load_from_json(self, file_name: str) -> bool:
+        """
+        Loads a graph from a json file.
+        It deserialize it from a JSON file, by loading it from the given path.
+        :param file_name: The path of the file
+        :return: True if the loading was successful, False o.w.
+        """
         graph_dis = DiGraph()
 
         try:
@@ -84,12 +99,31 @@ class GraphAlgo(GraphAlgoInterface):
         return False
 
     def shortest_path(self, source: int, destination: int) -> (float, list):
+        """
+        :param source: The start node id
+        :param destination: The end node id
+        :return: a tuple contains the distance (float) between source to destination
+                 and a list of the shortest path from node source to node destination using Dijkstra's Algorithm
+        """
         tuple_path = self.dijkstra(source, destination)
         if tuple_path is None:
             return 'inf', None
         return tuple_path
 
     def dijkstra(self, source: int, destination: int) -> (float, list):
+        """
+        This method implements the Dijkstra algorithm . and also keep on each node the shortest path from the source
+        node. These nodes enters a PriorityQueue() and the nodes that poll from the queue will be the nodes with the
+        shortest distance priority [ a tuple(weight, node) ] and also they will be marked as "visited" . Variant of
+        Queue that retrieves open entries in priority order (lowest first). Entries are typically tuples of the form:
+        ( priority number (weight / distance) , data (node) ). it follows that the destination node will keep the
+        shortest distance from the source node. dijkstra() is using the 'graph.all_in_edges_of_node()' instead of
+        transposing the graph.
+        :param source: the source of this path.
+        :param destination: the destination of this path.
+        :return:a tuple contains the distance (float) between source to destination and a list of the shortest
+        path from node source to node destination.
+        """
         if (source in self.graph.vertices and destination in self.graph.vertices
                 and source != destination):
             self.get_graph().Reset()
@@ -131,6 +165,12 @@ class GraphAlgo(GraphAlgoInterface):
         return None
 
     def connected_component(self, key: int) -> list:
+        """
+        Finds the Strongly Connected Component(SCC) that node key is a part of.
+        This method is using the 'connected_components()' to get and return the specific SCC.
+        :param key: The node id
+        :return: The list of nodes in the SCC
+        """
         if key in self.graph.vertices.keys():
             list_components = self.dfs()
             for component in list_components:
@@ -138,10 +178,30 @@ class GraphAlgo(GraphAlgoInterface):
                     return component
 
     def connected_components(self) -> List[list]:
+        """
+        Finds all the Strongly Connected Component(SCC) in the graph.
+        This method is using 'dfs()' (Kosaraju Algorithm) - more details check its docs.
+        :return: The list of all SCC
+        """
         if len(self.graph.vertices) > 0:
             return self.dfs()
 
     def dfs(self):
+        """
+        This method implements the 'Kosaraju algorithm'.
+        The Python interpreter limits the depths of recursion to help you avoid infinite recursions,
+        resulting in stack overflows.This limit prevents infinite recursion from causing an overflow of
+        the C stack and crashing Python.
+        That's why instead of using 'sys.setrecursionlimit' (which isn't permissioned in this task)
+        we implemented this method iterative way by using stacks ds to act like a recursion.
+        The first DFS 'dfs_inner()' is to find all the vertices u that are reachable from vertex v.
+        The second DFS 'dfs_reverse()' is to check the reverse, i.e if all u can reach v.
+        The reverse check on the second DFS is made by transposing and getting the graph via 'graph_transpose()'.
+        Instead of testing each vertex u ( which are reachable from v) and can reach v back,<br>
+        the second DFS on the transpose equivalently tests, if v can reach all u and in the end returning the
+        specific strongly component.
+        :return: The list of all SCC
+        """
         self.graph.Reset()
         stack = LifoQueue()
         for key in self.graph.vertices:
@@ -160,9 +220,46 @@ class GraphAlgo(GraphAlgoInterface):
 
         return components
 
+    def dfs_inner(self, vertex, stack):
+        """
+        This method is getting each unvisited vertex from dfs() first loop of vertices and fill the main 'stack' of
+        the components traversal order by using 'stack_like_rec' to act like a recursion (because of the restrictions
+        detailed in dfs() doc). This method is implementing the DFS algorithm iterative way. This is similar to BFS,
+        the only difference is queue is replaced by stack. Created a stack_dfs of nodes and visited array -> insert
+        the 'vertex' in the stack_dfs -> -> run a while-loop till the stack_dfs is not empty -> pop the element from
+        the stack_dfs -> -> for every neighbour and unvisited node of current node, mark 'visited' the node and
+        insert it in the stack_dfs -> -> insert it to stack_like_rec -> in the end pop all stack_like_rec to the main
+        'stack' (like a recursion).
+        :param vertex: a given node for this component.
+        :param stack: the main 'stack' of the components traversal order.
+        """
+        stack_like_rec = LifoQueue()
+        stack_dfs = LifoQueue()
+        stack_like_rec.put(vertex)
+        stack_dfs.put(vertex)
+        while not stack_dfs.empty():
+            current = stack_dfs.get()
+            current.setInfo("visited")
+            for neighbour in self.graph.all_out_edges_of_node(current.key).keys():
+                w = self.graph.get_node(neighbour)
+                if w.getInfo() == "unvisited":
+                    w.setInfo("visited")
+                    stack_dfs.put(w)
+                    stack_like_rec.put(w)
+
+        while not stack_like_rec.empty():
+            stack.put(stack_like_rec.get())
 
     @staticmethod
     def dfs_reverse(vertex, component, graph_t):
+        """
+        This method is also using the DFS algorithm (iterative) but this time, it will traverse the transposed graph,
+        Every call to this method is given with a new empty component that will be filled with the nodes which from
+        the given vertex to its SSC.
+        :param vertex: a node (DiNode).
+        :param component: a new list to be filled with nodes which from vertex SSC.
+        :param graph_t: the transposed graph.
+        """
         stack_dfs = LifoQueue()
         stack_dfs.put(vertex)
         vertex.setInfo("visited")
@@ -175,27 +272,16 @@ class GraphAlgo(GraphAlgoInterface):
                     v.setInfo("visited")
                     stack_dfs.put(v)
 
-
-    def dfs_inner(self, vertex, stack):
-            daza_stack = LifoQueue()
-            stack_bfs = LifoQueue()
-            daza_stack.put(vertex)
-            stack_bfs.put(vertex)
-            while not stack_bfs.empty():
-                current = stack_bfs.get()
-                current.setInfo("visited")
-                for neighbour in self.graph.all_out_edges_of_node(current.key).keys():
-                    w = self.graph.get_node(neighbour)
-                    if w.getInfo() == "unvisited":
-                        w.setInfo("visited")
-                        stack_bfs.put(w)
-                        daza_stack.put(w)
-
-            while not daza_stack.empty():
-                stack.put(daza_stack.get())
-
-
     def plot_graph(self) -> None:
+        """
+        Plots the graph.
+        If the nodes have a position, the nodes will be placed there.
+        Otherwise, they will be placed in a random but elegant manner.
+        This method is using `matplotlib.pyplot` which is a state-based interface to matplotlib.
+        It provides a MATLAB-like way of plotting.
+        pyplot is mainly intended for interactive plots and simple cases of
+        programmatic plot generation.
+        """
         plt.grid(color='grey', linestyle=':', linewidth=0.5)
         for edge in self.get_graph().edges:
             source = self.get_graph().get_node(edge[0])
