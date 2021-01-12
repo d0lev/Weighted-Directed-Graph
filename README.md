@@ -54,3 +54,6 @@
 <a href="https://ibb.co/Cw5QbzX"><img src="https://i.ibb.co/rQGHxmL/image-20210111170240724.png" alt="image-20210111170240724" border="0"></a>
 <h2>Visualization of random graphs</h2>
 <a href="https://ibb.co/crmBR4L"><img src="https://i.ibb.co/BC1pv0N/image-20210111170633382.png" alt="image-20210111170633382" border="0"></a><p>&nbsp;</p>
+
+Clone our project:
+`$ git clone https://github.com/d0lev/Weighted-Directed-Graph.git`
