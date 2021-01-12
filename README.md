@@ -50,7 +50,7 @@
 <tbody><tr><td>get_graph</td><td>return a graph object</td></tr><tr><td>shortest_path</td><td>return tuple of two objects (length of the path, list of nodes that are in the path)</td></tr><tr><td>connected_component</td><td>return a list that represent the strongly component that associated with the initial key</td></tr><tr><td>connected_components</td><td>return a list of lists that representing the strongly components in the graph</td></tr><tr><td>plot_graph</td><td>making a graphic user interface by using the library mathplotlib</td></tr><tr><td>save_to_json</td><td>graph object serialization</td></tr><tr><td>load_from_json</td><td>graph object deserialization</td></tr></tbody>
 </table></figure>
 <p>&nbsp;</p>
-<h3><u>Weighted Directed Graph visualization</u></h3>
+<h3><u>Visualization of given graphs</u></h3>
 <p>&nbsp;</p>
 <a href="https://ibb.co/Cw5QbzX"><img src="https://i.ibb.co/rQGHxmL/image-20210111170240724.png" alt="image-20210111170240724" border="0"></a>
 <h2>Visualization of random graphs</h2>
