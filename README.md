@@ -1,6 +1,6 @@
 [![neural-network-shutterstock.jpg](https://i.postimg.cc/fLzS3WMr/neural-network-shutterstock.jpg)](https://postimg.cc/1gd32QnG)
 
-
+ 
 <h2>Weighted Directed Graph</h2>
 <p>Project as part of the object-oriented course.</p>
 <p>The above project deals with the construction of the data structure - an Directed and Weighted graph, using other data structures.</p>
