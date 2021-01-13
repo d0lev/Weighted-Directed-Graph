@@ -1,5 +1,6 @@
-<p><img src="C:\Users\dolev\OneDrive\שולחן העבודה\Fam\wp6690890-neural-networks-wallpapers.jpg" referrerpolicy="no-referrer" alt="wp6690890-neural-networks-wallpapers"></p>
-<p>&nbsp;</p>
+[![neural-network-shutterstock.jpg](https://i.postimg.cc/fLzS3WMr/neural-network-shutterstock.jpg)](https://postimg.cc/1gd32QnG)
+
+ 
 <h2>Weighted Directed Graph</h2>
 <p>Project as part of the object-oriented course.</p>
 <p>The above project deals with the construction of the data structure - an Directed and Weighted graph, using other data structures.</p>
@@ -8,8 +9,8 @@
 <li>The shortest path between two nodes</li>
 <li>Finding the Connected components</li>
 <li>Deserialization and Serialization</li>
-
 </ol>
+
 <p>&nbsp;</p>
 <p>The classes of the project :</p>
 <ol>
@@ -49,6 +50,12 @@
 <tbody><tr><td>get_graph</td><td>return a graph object</td></tr><tr><td>shortest_path</td><td>return tuple of two objects (length of the path, list of nodes that are in the path)</td></tr><tr><td>connected_component</td><td>return a list that represent the strongly component that associated with the initial key</td></tr><tr><td>connected_components</td><td>return a list of lists that representing the strongly components in the graph</td></tr><tr><td>plot_graph</td><td>making a graphic user interface by using the library mathplotlib</td></tr><tr><td>save_to_json</td><td>graph object serialization</td></tr><tr><td>load_from_json</td><td>graph object deserialization</td></tr></tbody>
 </table></figure>
 <p>&nbsp;</p>
-<h3><u>Weighted Directed Graph visualization</u></h3>
-<p>&nbsp;</p>
+<h2><u>Visualization of given graphs</u></h2>
 <a href="https://ibb.co/Cw5QbzX"><img src="https://i.ibb.co/rQGHxmL/image-20210111170240724.png" alt="image-20210111170240724" border="0"></a>
+<h2>Visualization of random graphs</h2>
+<a href="https://ibb.co/crmBR4L"><img src="https://i.ibb.co/BC1pv0N/image-20210111170633382.png" alt="image-20210111170633382" border="0"></a><p>&nbsp;</p>
+
+Clone our project:
+`$ git clone https://github.com/d0lev/Weighted-Directed-Graph.git`
+
+<a href="https://github.com/d0lev/Weighted-Directed-Graph/wiki" title="Wiki"><img src="https://t3.ftcdn.net/jpg/00/37/56/34/240_F_37563459_R1WRmGUm1zvlRpxloYYV9D01BQtOGiPX.jpg" alt="wiki" width="100px" height="30px"></a>
