@@ -104,7 +104,7 @@ class TestGraphAlgo(TestCase):
         lists = self.algorithms.connected_components()
         self.assertEqual(str(lists), str([[1], [0], [3], [2, 6, 4], [5]]))
 
-    def test_dfs(self):
+    def test_kosaraju(self):
         lists = self.algorithms.connected_components()
         self.assertEqual(str(lists), str([[1], [0], [3], [2, 6, 4], [5]]))
 
