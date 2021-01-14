@@ -172,7 +172,7 @@ class GraphAlgo(GraphAlgoInterface):
         :return: The list of nodes in the SCC
         """
         if key in self.graph.vertices.keys():
-            list_components = self.dfs()
+            list_components = self.kosaraju()
             for component in list_components:
                 if key in component:
                     return component
@@ -180,13 +180,13 @@ class GraphAlgo(GraphAlgoInterface):
     def connected_components(self) -> List[list]:
         """
         Finds all the Strongly Connected Component(SCC) in the graph.
-        This method is using 'dfs()' (Kosaraju Algorithm) - more details check its docs.
+        This method is using 'kosaraju()' - more details check its docs.
         :return: The list of all SCC
         """
         if len(self.graph.vertices) > 0:
-            return self.dfs()
+            return self.kosaraju()
 
-    def dfs(self):
+    def kosaraju(self):
         """
         This method implements the 'Kosaraju algorithm'.
         The Python interpreter limits the depths of recursion to help you avoid infinite recursions,
@@ -222,9 +222,9 @@ class GraphAlgo(GraphAlgoInterface):
 
     def dfs_inner(self, vertex, stack):
         """
-        This method is getting each unvisited vertex from dfs() first loop of vertices and fill the main 'stack' of
+        This method is getting each unvisited vertex from kosaraju() first loop of vertices and fill the main 'stack' of
         the components traversal order by using 'stack_like_rec' to act like a recursion (because of the restrictions
-        detailed in dfs() doc). This method is implementing the DFS algorithm iterative way. This is similar to BFS,
+        detailed in kosaraju() doc). This method is implementing the DFS algorithm iterative way. This is similar to BFS,
         the only difference is queue is replaced by stack. Created a stack_dfs of nodes and visited array -> insert
         the 'vertex' in the stack_dfs -> -> run a while-loop till the stack_dfs is not empty -> pop the element from
         the stack_dfs -> -> for every neighbour and unvisited node of current node, mark 'visited' the node and
