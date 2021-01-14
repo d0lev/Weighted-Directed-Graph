@@ -119,10 +119,10 @@ class DiGraph(GraphInterface):
         if key in self.vertices:
 
             for vertex in list(self.all_in_edges_of_node(key)):
-                self.remove_edge(vertex, key)
+                del self.adjacency[vertex][key]
 
             for vertex2 in list(self.all_out_edges_of_node(key)):
-                self.remove_edge(key, vertex2)
+                del self.adjacency[key][vertex2]
 
             del self.vertices[key]
             del self.adjacency[key]
@@ -168,6 +168,7 @@ class DiGraph(GraphInterface):
         """
         return self.vertices
 
+
     def Reset(self):
         for key in self.vertices:
             vertex = self.get_node(key)
@@ -192,3 +193,4 @@ class DiGraph(GraphInterface):
                 main_str += ", "
 
         return main_str
+

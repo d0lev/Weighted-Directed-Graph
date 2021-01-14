@@ -93,7 +93,7 @@ class TestDiGraph(TestCase):
         self.assertEqual(actual, expected)
         self.graph.remove_node(5)
         actual = self.graph.mc
-        expected = 19
+        expected = 17
         self.assertEqual(actual, expected)
 
     def test_get_all_v(self):
@@ -113,3 +113,5 @@ class TestDiGraph(TestCase):
 
         expected = 7
         self.assertEqual(actual, expected)
+
+

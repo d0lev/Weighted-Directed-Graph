@@ -5,8 +5,10 @@ import json
 import networkx as nx
 import time
 
+
 class Analysis:
     """simple class that analysis the comparison between python and networkX on a different graphs"""
+
     def __init__(self):
         self.g = DiGraph()
         self.graph = GraphAlgo(self.g)
@@ -29,7 +31,7 @@ class Analysis:
                     if pos is not None:
                         pos = tuple(map(float, vertex['pos'].split(',')))
                     key = vertex['id']
-                    graphnx.add_node(key,pos=pos)
+                    graphnx.add_node(key, pos=pos)
 
                 for edge in graph_from_json['Edges']:
                     source = int(edge['src'])
@@ -83,9 +85,10 @@ class Analysis:
         print("The time execution is : %s\n" % time_execution)
         self.NetworkX((source, destination), str)
 
-    def plotting(self,str):
+    def plotting(self, str):
         self.graph.load_from_json(str)
         self.graph.plot_graph()
+
 
 if __name__ == '__main__':
     G = Analysis()
@@ -95,6 +98,6 @@ if __name__ == '__main__':
     str_4 = "../data/G_10000_80000_1.json"
     str_5 = "../data/G_20000_160000_1.json"
     str_6 = "../data/G_30000_240000_1.json"
-    list_strs = [str_1,str_2,str_3,str_4,str_5,str_6]
+    list_strs = [str_1, str_2, str_3, str_4, str_5, str_6]
     for test in list_strs:
         G.Python(test)
